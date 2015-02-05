@@ -4,3 +4,4 @@ user: thegreenvintage
 description: The Green Vintage
 domain: thegreenvintage.com
 github_user_name: TheGreenVintage
+rvm_path: "/usr/local/rvm/rubies/default/bin:/usr/local/rvm/bin:/usr/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin"

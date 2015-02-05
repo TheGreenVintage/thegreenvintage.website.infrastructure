@@ -41,11 +41,38 @@
     - name: writes the nginx site
       template: src=templates/nginx.site.j2 dest=/etc/nginx/sites-available/www.{{ domain }} mode=0644
 
-    - name: install bundler package
-      gem: name=bundler state=latest
-
-    - name: install rake package
-      gem: name=rake state=latest
-
     - name: install forever package
       npm: name=forever global=yes
+
+    - name: Install system ruby version
+      apt: pkg={{ item }} state=present
+      with_items:
+        - curl
+        - ruby
+
+    - name: Install rvm key
+      shell: "gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3"
+
+    - name: Install latest stable ruby version
+      shell: "\\curl -sSL https://get.rvm.io | bash -s stable --ruby"
+
+    - name: Remove system ruby version
+      apt: pkg= state=absent purge=yes
+      with_items:
+        - ruby
+        - ruby1.9.1
+        - libruby1.9.1
+
+    - name: Install bundler
+      shell: "gem install bundler"
+      environment:
+        PATH: "{{ rvm_path }}:{{ ansible_env.PATH }}"
+
+    - name: install ruby package
+      action: apt pkg=ruby1.9.1-dev state=installed
+
+    - name: install jekyll gems
+      gem: name=jekyll state=present user_install=no
+
+    - name: ensure apache is running
+      service: name=nginx state=started

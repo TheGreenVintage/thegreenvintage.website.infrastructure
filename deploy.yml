@@ -33,10 +33,21 @@
       sudo_user: "{{ user }}"
       sudo: yes
 
-    - name: Initializes bundle
-      command: "pushd /home/{{ user }}/{{ user }}.website.static && bundle"
+    - name: install bundler gems
+      gem: name=bundler state=present user_install=yes
+      sudo_user: "{{ user }}"
+      sudo: yes
 
     - name: Build jekyll
-      command: "pushd /home/{{ user }}/{{ user }}.website.static && bundle exec jekyll build"
-      #trigger:
-      # - restart nginx
+      command: "bundle exec jekyll build"
+      sudo_user: "{{ user }}"
+      sudo: yes
+      environment:
+        PATH: "{{ rvm_path }}:{{ ansible_env.PATH }}"
+      args:
+        chdir: "/home/{{ user }}/{{ user }}.website.static"
+      notify:
+       - restart nginx
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
