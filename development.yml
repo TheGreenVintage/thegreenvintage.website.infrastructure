@@ -1,0 +1,14 @@
+---
+
+- hosts: development
+  remote_user: ubuntu
+  sudo: yes
+  vars:
+    domain: local.thegreenvintage.com
+  vars_files:
+    - vars.yml
+
+  roles:
+    - common
+    - frontend
+    - backend

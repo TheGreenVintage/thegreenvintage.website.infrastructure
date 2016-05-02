@@ -1,0 +1,23 @@
+---
+
+- hosts: production
+  vars:
+    domain: thegreenvintage.com
+  vars_files:
+    - vars.yml
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - common
+    - frontend
+    - backend
+    - role: letsencrypt
+      letsencrypt_webroot_path: '/usr/share/nginx/html/{{ user }}.website.static'
+      letsencrypt_email: 'info@{{ domain }}'
+      letsencrypt_cert_domains:
+        - 'www.{{ domain }}'
+        - 'next.{{ domain }}'
+        - '{{ domain }}'
+
+      letsencrypt_renewal_command_args: '--renew-hook "systemctl restart nginx"'

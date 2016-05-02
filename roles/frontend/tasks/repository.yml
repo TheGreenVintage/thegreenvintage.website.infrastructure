@@ -1,0 +1,12 @@
+---
+  - name: checkouts the static bare repository
+    git:
+      repo: https://github.com/{{ github_user_name }}/{{ user }}.website.static.git
+      dest: /home/{{ user }}/shared/repositories/{{ user }}.website.static
+      bare: yes
+
+  - name: copy git hook for static repository
+    copy:
+      src: roles/frontend/files/post-receive
+      dest: /home/{{ user }}/shared/repositories/{{ user }}.website.static/hooks/post-receive
+      mode: 'u+x'

@@ -1,0 +1,4 @@
+---
+  - include: repository.yml
+  - include: nginx.yml
+  - include: ruby.yml

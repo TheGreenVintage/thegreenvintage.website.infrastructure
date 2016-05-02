@@ -1,0 +1,4 @@
+[submodule "vendor/ansible-letsencrypt"]
+	path = vendor/ansible-letsencrypt
+	url = git@github.com:thefinn93/ansible-letsencrypt.git
+	branch = 1bc0fb62ff63b798ba28de77cd250e56dc872fd2

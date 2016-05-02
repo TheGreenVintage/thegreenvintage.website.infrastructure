@@ -1,0 +1,19 @@
+---
+
+   - name: Add Nginx ppa
+     apt_repository: repo=ppa:nginx/stable state=present
+
+   - name: install nginx package
+     action: apt pkg=nginx state=installed update_cache=yes
+
+   - name: remove default nginx site
+     action: file path=/etc/nginx/sites-enabled/default state=absent
+
+   - name: writes the nginx site
+     template: src=templates/nginx.site.j2 dest=/etc/nginx/sites-available/www.{{ domain }} mode=0644
+
+   - name: writes the nginx next site
+     template: src=templates/nginx.next.site.j2 dest=/etc/nginx/sites-available/next.{{ domain }} mode=0644
+
+   - name: ensure nginx is running
+     service: name=nginx state=started

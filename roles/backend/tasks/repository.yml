@@ -1,0 +1,12 @@
+---
+  - name: checkouts the dynamic bare repository
+    git:
+      repo: https://github.com/{{ github_user_name }}/{{ user }}.website.dynamic.git
+      dest: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
+      bare: yes
+
+  - name: copy git hook for dynamic repository
+    copy:
+      src: roles/backend/files/post-receive
+      dest: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic/hooks/post-receive
+      mode: 'u+x'

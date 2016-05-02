@@ -1,2 +1,6 @@
-deploy:
-	ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --private-key=~/.vagrant.d/insecure_private_key -u vagrant deploy.yml
+submodules:
+	git submodule init
+	git submodule update
+
+development:
+	ansible-playbook development.yml -i hosts --ask-sudo-pass

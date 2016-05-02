@@ -1,1 +1,5 @@
+[development]
+app ansible_ssh_host=10.0.3.8 ansible_ssh_user=ubuntu
+
+[production]
 thegreenvintage.com ansible_ssh_user=thegreenvintage

@@ -1,0 +1,32 @@
+#!/bin/bash -l
+
+set -e
+
+WWW=$HOME/shared/public
+GIT_REPO=$HOME/shared/repositories/$USER.website.static
+TMP_GIT_CLONE=$HOME/tmp/git/$USER.website.static
+PUBLIC_PROD_WWW=$WWW/$USER.website.static
+PUBLIC_NEXT_WWW=$WWW/next.$USER.website.static
+
+read GIT_FROM GIT_TO GIT_BRANCH
+GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
+
+if [ "$GIT_BRANCH" == "master" ]; then
+  PUBLIC_WWW=$PUBLIC_PROD_WWW
+fi
+
+if [ "$GIT_BRANCH" == "next" ]; then
+  PUBLIC_WWW=$PUBLIC_NEXT_WWW
+fi
+
+if [ -z "$PUBLIC_WWW" ]; then
+  echo "Unknown branch. Nothing to do..."
+  exit
+fi
+
+git clone $GIT_REPO $TMP_GIT_CLONE
+cd $TMP_GIT_CLONE
+bundle install --path $HOME/.gem
+bundle exec jekyll build --source $TMP_GIT_CLONE --destination $PUBLIC_WWW
+rm -Rf $TMP_GIT_CLONE
+exit

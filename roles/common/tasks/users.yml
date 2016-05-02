@@ -1,0 +1,12 @@
+---
+  - name: creates the app user
+    user: name={{ user }} group=www-data shell=/bin/bash # generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+
+  - name: enable colors for root
+    command: sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
+
+  - name: enable colors for the new base user
+    command: sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /home/{{ user }}/.bashrc
+
+  - name: ensures that the shared folder is created
+    action: file path=/home/{{ user }}/shared state=directory
