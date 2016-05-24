@@ -13,16 +13,10 @@ GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
 
 if [ "$GIT_BRANCH" == "master" ]; then
   PUBLIC_WWW=$PUBLIC_PROD_WWW
-fi
-
-if [ "$GIT_BRANCH" == "next" ]; then
+else
   PUBLIC_WWW=$PUBLIC_NEXT_WWW
 fi
 
-if [ -z "$PUBLIC_WWW" ]; then
-  echo "Unknown branch. Nothing to do..."
-  exit
-fi
 
 git clone $GIT_REPO $TMP_GIT_CLONE
 cd $TMP_GIT_CLONE
