@@ -17,8 +17,8 @@
     - common
     - frontend
     - backend
-    - role: letsencrypt
-      letsencrypt_webroot_path: /home/{{ user }}/shared/public/{{ user }}.website.static
+    - role: vendor/ansible-letsencrypt
+      letsencrypt_webroot_path: '/home/{{ user }}/shared/public/{{ user }}.website.static'
       letsencrypt_email: 'info@{{ domain }}'
       letsencrypt_cert_domains:
         - 'www.{{ domain }}'
