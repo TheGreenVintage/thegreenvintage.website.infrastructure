@@ -6,13 +6,9 @@
    - name: ensure nginx is running
      service: name=nginx state=started
 
-   - debug: msg="Path {{ certificates_folder }}/{{ domain }}/privkey.pem"
-
    - name: checking existing certificates
      stat: path={{ certificates_folder }}/{{ domain }}/privkey.pem
      register: certificates
-
-   - debug: msg="Cert {{ certificates.stat.exists }}"
 
    - name: remove default nginx site
      action: file path=/etc/nginx/sites-enabled/default state=absent
