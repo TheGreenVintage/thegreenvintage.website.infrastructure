@@ -1,10 +1,18 @@
 ---
 
-   - name: Add Nginx ppa
-     apt_repository: repo=ppa:nginx/stable state=present
-
    - name: install nginx package
      action: apt pkg=nginx state=installed update_cache=yes
+
+   - name: ensure nginx is running
+     service: name=nginx state=started
+
+   - debug: msg="Path {{ certificates_folder }}/{{ domain }}/privkey.pem"
+
+   - name: checking existing certificates
+     stat: path={{ certificates_folder }}/{{ domain }}/privkey.pem
+     register: certificates
+
+   - debug: msg="Cert {{ certificates.stat.exists }}"
 
    - name: remove default nginx site
      action: file path=/etc/nginx/sites-enabled/default state=absent
@@ -15,5 +23,10 @@
    - name: writes the nginx next site
      template: src=templates/nginx.next.site.j2 dest=/etc/nginx/sites-available/next.{{ domain }} mode=0644
 
-   - name: ensure nginx is running
-     service: name=nginx state=started
+   - name: Create symlink for site
+     file: src=/etc/nginx/sites-available/www.{{ domain }} dest=/etc/nginx/sites-enabled/www.{{ domain }} state=link
+     notify: nginx reload
+
+   - name: Create symlink for next site
+     file: src=/etc/nginx/sites-available/next.{{ domain }} dest=/etc/nginx/sites-enabled/next.{{ domain }} state=link
+     notify: nginx reload
