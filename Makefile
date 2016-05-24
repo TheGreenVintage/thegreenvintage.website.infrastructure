@@ -2,8 +2,8 @@ submodules:
 	git submodule init
 	git submodule update
 
-development:
-	ansible-playbook development.yml -i hosts --ask-sudo-pass
+dev:
+	ansible-playbook development.yml -i hosts --ask-sudo-pass -e 'ansible_python_interpreter=/usr/bin/python2.7'
 
-production:
-	ansible-playbook production.yml -i hosts --ask-sudo-pass
+pro:
+	ansible-playbook production.yml -i hosts --ask-sudo-pass -e 'ansible_python_interpreter=/usr/bin/python2.7'

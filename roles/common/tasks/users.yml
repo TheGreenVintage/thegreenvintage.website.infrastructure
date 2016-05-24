@@ -9,4 +9,4 @@
     command: sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /home/{{ user }}/.bashrc
 
   - name: ensures that the shared folder is created
-    action: file path=/home/{{ user }}/shared state=directory
+    action: file path=/home/{{ user }}/shared state=directory group=www-data owner={{ user }} mode=775

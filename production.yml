@@ -1,23 +1,28 @@
 ---
 
 - hosts: production
-  vars:
-    domain: thegreenvintage.com
+  remote_user: thegreenvintage
+  become: yes
   vars_files:
     - vars.yml
-  remote_user: ubuntu
-  sudo: yes
+  vars:
+    domain: thegreenvintage.com
+    certificates_folder: /etc/letsencrypt/live
+  vars_prompt:
+    - name: "create_certificates"
+      prompt: "Create SSL Certificates (yes, no)"
+      default: "no"
 
   roles:
     - common
     - frontend
     - backend
     - role: letsencrypt
-      letsencrypt_webroot_path: '/usr/share/nginx/html/{{ user }}.website.static'
+      letsencrypt_webroot_path: /home/{{ user }}/shared/public/{{ user }}.website.static
       letsencrypt_email: 'info@{{ domain }}'
       letsencrypt_cert_domains:
         - 'www.{{ domain }}'
         - 'next.{{ domain }}'
         - '{{ domain }}'
-
       letsencrypt_renewal_command_args: '--renew-hook "systemctl restart nginx"'
+      when: create_certificates == 'yes'

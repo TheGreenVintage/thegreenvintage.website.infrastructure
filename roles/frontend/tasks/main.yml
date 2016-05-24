@@ -1,4 +1,6 @@
 ---
+  - include: folders.yml
+  - include: certificates.yml
   - include: repository.yml
   - include: nginx.yml
   - include: ruby.yml

@@ -3,10 +3,15 @@
 - hosts: development
   remote_user: ubuntu
   sudo: yes
-  vars:
-    domain: local.thegreenvintage.com
   vars_files:
     - vars.yml
+  vars:
+    domain: local.thegreenvintage.com
+    certificates_folder: /home/{{ user }}/shared/certificates
+  vars_prompt:
+    - name: "create_certificates"
+      prompt: "Create SSL Certificates (yes, no)"
+      default: "no"
 
   roles:
     - common
