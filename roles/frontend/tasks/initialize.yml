@@ -1,0 +1,10 @@
+---
+  - stat: path=/home/{{ user }}/shared/public/{{ user }}.website.static
+    register: frontend
+
+  - name: initialize frontend
+    when: frontend.stat.exists == False
+    git:
+      repo: /home/{{ user }}/shared/repositories/{{ user }}.website.static
+      dest: /home/{{ user }}/shared/public/{{ user }}.website.static
+      version: master

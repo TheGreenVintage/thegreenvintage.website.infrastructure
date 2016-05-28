@@ -1,0 +1,10 @@
+---
+  - stat: path=/home/{{ user }}/shared/public/{{ user }}.website.dynamic
+    register: backend
+
+  - name: initialize backend
+    when: backend.stat.exists == False
+    git:
+      repo: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
+      dest: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+      version: master
