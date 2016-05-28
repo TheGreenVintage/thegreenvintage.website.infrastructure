@@ -13,7 +13,7 @@
   - name: install nodejs package
     action: apt pkg=nodejs state=installed
 
-  - name: install forever package
+  - name: install pm2 package
     npm: name=pm2 global=yes
 
   - name: starting backend service
