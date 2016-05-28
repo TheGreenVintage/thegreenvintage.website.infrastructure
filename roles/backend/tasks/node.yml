@@ -1,4 +1,7 @@
 ---
+  - name: environment variables
+    template: src=templates/bash_profile dest=/home/{{ user }}/.bash_profile mode=0644
+
   - name: Import the NodeSource GPG key into apt
     apt_key:
       url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
@@ -11,4 +14,9 @@
     action: apt pkg=nodejs state=installed
 
   - name: install forever package
-    npm: name=forever global=yes
+    npm: name=pm2 global=yes
+
+  - name: starting backend service
+    command: pm2 start ./bin/www --name {{ user }}.backend
+    args:
+      chdir: /home/{{ user }}/shared/public/{{ user }}.website.dynamic

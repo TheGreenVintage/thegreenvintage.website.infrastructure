@@ -2,10 +2,10 @@
 
 set -e
 
+WWW=$HOME/shared/public
 GIT_REPO=$HOME/shared/repositories/$USER.website.dynamic
-TMP_GIT_CLONE=$HOME/tmp/git/$USER.website.dynamic
-PUBLIC_PROD_WWW=/usr/shared/nginx/$USER.website.dynamic
-PUBLIC_NEXT_WWW=/usr/shared/nginx/next.$USER.website.dynamic
+PUBLIC_PROD_WWW=$WWW/$USER.website.dynamic
+PUBLIC_NEXT_WWW=$WWW/next.$USER.website.dynamic
 
 read GIT_FROM GIT_TO GIT_BRANCH
 GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
@@ -13,18 +13,19 @@ GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
 
 if [ "$GIT_BRANCH" == "master" ]; then
   PUBLIC_WWW=$PUBLIC_PROD_WWW
-fi
-
-if [ "$GIT_BRANCH" == "next" ]; then
+  SERVICE=$USER.backend
+else
   PUBLIC_WWW=$PUBLIC_NEXT_WWW
+  SERVICE=$USER.next.backend
 fi
 
-if [ -z "$PUBLIC_WWW" ]; then
-  echo "Unknown branch. Nothing to do..."
-  exit
-fi
 
-git clone $GIT_REPO $TMP_GIT_CLONE
-echo 'Doing something with node...'
+echo 'Restarting node service...'
+
+# Fix downtime
 rm -Rf $TMP_GIT_CLONE
+
+git clone $GIT_REPO $PUBLIC_WWW
+cd $PUBLIC_WWW
+pm2 restart $SERVICE
 exit
