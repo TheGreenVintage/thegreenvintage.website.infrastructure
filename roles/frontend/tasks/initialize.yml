@@ -3,6 +3,7 @@
     register: frontend
 
   - name: initialize frontend
+    become_user: '{{ user }}'
     when: frontend.stat.exists == False
     git:
       repo: /home/{{ user }}/shared/repositories/{{ user }}.website.static

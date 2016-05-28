@@ -3,8 +3,32 @@
     register: backend
 
   - name: initialize backend
+    become_user: '{{ user }}'
     when: backend.stat.exists == False
     git:
       repo: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
       dest: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
       version: master
+
+  - name: installing package.json dependencies
+    become_user: '{{ user }}'
+    command: npm install
+    args:
+      chdir: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+
+  - stat: path=/home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+    register: nextbackend
+
+  - name: initialize next backend
+    become_user: '{{ user }}'
+    when: nextbackend.stat.exists == False
+    git:
+      repo: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
+      dest: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+      version: master # Override in future deploys
+
+  - name: installing package.json dependencies in next
+    become_user: '{{ user }}'
+    command: npm install
+    args:
+      chdir: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic

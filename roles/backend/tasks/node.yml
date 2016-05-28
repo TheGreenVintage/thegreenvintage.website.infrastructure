@@ -17,6 +17,17 @@
     npm: name=pm2 global=yes
 
   - name: starting backend service
+    become_user: '{{ user }}'
     command: pm2 start ./bin/www --name {{ user }}.backend
     args:
       chdir: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+    environment:
+      PORT: /home/{{ user }}/shared/{{ user}}.website.dynamic.sock
+
+  - name: starting next backend service
+    become_user: '{{ user }}'
+    command: pm2 start ./bin/www --name next.{{ user }}.backend
+    args:
+      chdir: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+    environment:
+      PORT: /home/{{ user }}/shared/next.{{ user}}.website.dynamic.sock
