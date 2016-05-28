@@ -2,3 +2,6 @@
 
   - name: ensures that the public folder is created
     action: file path=/home/{{ user }}/shared/public state=directory group=www-data owner={{ user }} mode=775
+
+  - name: ensures that the extra folder is created
+    action: file path=/home/{{ user }}/shared/extras state=directory group=www-data owner={{ user }} mode=775

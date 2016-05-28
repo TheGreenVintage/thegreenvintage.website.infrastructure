@@ -46,6 +46,12 @@ server {
 
   try_files $uri/index.html $uri.html $uri @app;
 
+  # Initial i18n redirect
+  location = / {
+    set $ngx_html_path $document_root;
+    content_by_lua_file /home/{{ user }}/shared/extras/lang.lua;
+  }
+
   # Feed
   location ~* \.(?:rss|atom)$ {
     expires 1h;

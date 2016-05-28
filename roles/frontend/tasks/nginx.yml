@@ -3,6 +3,9 @@
    - name: install nginx package
      action: apt pkg=nginx state=installed update_cache=yes
 
+   - name: install nginx extras package
+     action: apt pkg=nginx-extras state=installed update_cache=yes
+
    - name: ensure nginx is running
      service: name=nginx state=started
 
@@ -18,6 +21,13 @@
 
    - name: writes the nginx next site
      template: src=templates/nginx.next.site.j2 dest=/etc/nginx/sites-available/next.{{ domain }} mode=0644
+
+   - name: writes the lua lang module
+     notify: nginx reload
+     copy:
+       src: vendor/nginx-http-accept-lang/lang.lua
+       dest: /home/{{ user }}/shared/extras/lang.lua
+       mode: 'u+x'
 
    - name: Create symlink for site
      file: src=/etc/nginx/sites-available/www.{{ domain }} dest=/etc/nginx/sites-enabled/www.{{ domain }} state=link
