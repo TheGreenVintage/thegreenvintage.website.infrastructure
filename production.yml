@@ -5,6 +5,7 @@
   become: yes
   vars_files:
     - vars.yml
+    - secrets.yml
   vars:
     domain: thegreenvintage.com
     certificates_folder: /etc/letsencrypt/live
