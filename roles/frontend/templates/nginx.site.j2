@@ -1,5 +1,5 @@
 upstream app_server_{{ user }} {
-  server unix:/home/{{ user }}/shared/{{ user }}.website.dynamic.sock fail_timeout=0;
+  server unix:/home/{{ user }}/shared/sockets/{{ user }}.website.dynamic.sock fail_timeout=0;
 }
 
 server {

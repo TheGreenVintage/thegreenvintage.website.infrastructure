@@ -1,4 +1,5 @@
 ---
+  - include: folders.yml
   - include: repository.yml
-  - include: initialize.yml
   - include: node.yml
+  - include: initialize.yml

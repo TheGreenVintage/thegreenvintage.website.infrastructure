@@ -32,3 +32,19 @@
     command: npm install
     args:
       chdir: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+
+  - name: starting backend service
+    become_user: '{{ user }}'
+    command: pm2 start ./bin/www --name {{ user }}.backend
+    args:
+      chdir: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+    environment:
+      PORT: /home/{{ user }}/shared/sockets/{{ user}}.website.dynamic.sock
+
+  - name: starting next backend service
+    become_user: '{{ user }}'
+    command: pm2 start ./bin/www --name next.{{ user }}.backend
+    args:
+      chdir: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+    environment:
+      PORT: /home/{{ user }}/shared/sockets/next.{{ user}}.website.dynamic.sock

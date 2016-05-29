@@ -1,5 +1,5 @@
 upstream app_server_next_{{ user }} {
-  server unix:/home/{{ user }}/shared/next.{{ user }}.website.dynamic.sock fail_timeout=0;
+  server unix:/home/{{ user }}/shared/sockets/next.{{ user }}.website.dynamic.sock fail_timeout=0;
 }
 
 server {

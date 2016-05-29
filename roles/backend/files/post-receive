@@ -16,7 +16,7 @@ if [ "$GIT_BRANCH" == "master" ]; then
   SERVICE=$USER.backend
 else
   PUBLIC_WWW=$PUBLIC_NEXT_WWW
-  SERVICE=$USER.next.backend
+  SERVICE=next.$USER.backend
 fi
 
 
