@@ -1,6 +1,7 @@
 ---
   - name: environment variables
-    template: src=templates/bash_profile dest=/home/{{ user }}/.bash_profile mode=0644
+    become_user: '{{ user }}'
+    template: src=templates/bash_profile dest=/home/{{ user }}/.bash_profile mode=0640
 
   - name: Import the NodeSource GPG key into apt
     apt_key:
