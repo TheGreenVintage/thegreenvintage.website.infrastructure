@@ -3,17 +3,10 @@
     action: file path=/home/{{ user }}/shared/certificates state=directory group=www-data owner={{ user }} mode=775
 
   - name: ensures that the certificates folder for site is created
-    action: file path=/home/{{ user }}/shared/certificates/{{ domain }} state=directory group=www-data owner={{ user }} mode=775
-
-  - name: ensures that the certificates folder for next site is created
-    action: file path=/home/{{ user }}/shared/certificates/next.{{ domain }} state=directory group=www-data owner={{ user }} mode=775
+    action: file path=/home/{{ user }}/shared/certificates/www.{{ domain }} state=directory group=www-data owner={{ user }} mode=775
 
   - name: generates a self signed certificate for site
-    command: openssl req -x509 -newkey rsa:2048 -keyout /home/{{ user }}/shared/certificates/{{ domain }}/privkey.pem -out /home/{{ user }}/shared/certificates/{{ domain }}/fullchain.pem -days 365 -nodes -subj /C=DM/ST=Dummy/L=Dummy/O=Dummy/OU=Dummy/CN={{ domain }},www.{{ domain }}
-    when: create_certificates == 'yes'
-
-  - name: generates a self signed certificate for next site
-    command: openssl req -x509 -newkey rsa:2048 -keyout /home/{{ user }}/shared/certificates/next.{{ domain }}/privkey.pem -out /home/{{ user }}/shared/certificates/next.{{ domain }}/fullchain.pem -days 365 -nodes -subj /C=DM/ST=Dummy/L=Dummy/O=Dummy/OU=Dummy/CN=next.{{ domain }}
+    command: openssl req -x509 -newkey rsa:2048 -keyout /home/{{ user }}/shared/certificates/www.{{ domain }}/privkey.pem -out /home/{{ user }}/shared/certificates/www.{{ domain }}/fullchain.pem -days 365 -nodes -subj /C=DM/ST=Dummy/L=Dummy/O=Dummy/OU=Dummy/CN={{ domain }},www.{{ domain }},next.{{ domain }}
     when: create_certificates == 'yes'
 
   - stat: path=/etc/ssl/certs/dhparam.pem

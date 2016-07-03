@@ -10,7 +10,7 @@
      service: name=nginx state=started
 
    - name: checking existing certificates
-     stat: path={{ certificates_folder }}/{{ domain }}/privkey.pem
+     stat: path={{ certificates_folder }}/www.{{ domain }}/privkey.pem
      register: certificates
 
    - name: remove default nginx site

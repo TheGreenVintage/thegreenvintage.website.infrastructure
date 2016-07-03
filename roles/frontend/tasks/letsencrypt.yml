@@ -1,0 +1,16 @@
+---
+
+  - name: install letsencrypt package
+    action: apt pkg=letsencrypt state=installed update_cache=yes
+    when: create_certificates == 'yes'
+
+  - stat: path=/etc/letsencrypt/live/www.{{ domain }}/
+    register: livecert
+
+  - name: letsencrypt issuance
+    command: letsencrypt certonly -n --agree-tos --webroot -w /home/{{ user }}/shared/public/{{ user }}.website.static/ -d www.{{ domain }} -d {{ domain }} -w /home/{{ user }}/shared/public/next.{{ user }}.website.static/ -d next.{{ domain }} -m {{ webmaster_email }}
+    when: create_certificates == 'yes' and livecert.stat.exists == False
+
+  - name: add cron rule for letsencrypt renewals
+    cron: name="letsencrypt renewal" minute="0" hour="11" job="letsencrypt renew"
+    when: create_certificates == 'yes'

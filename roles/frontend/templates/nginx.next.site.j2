@@ -14,8 +14,9 @@ server {
 
   listen 443 ssl http2;
 
-  ssl_certificate {{ certificates_folder }}/{{ domain }}/fullchain.pem;
-  ssl_certificate_key {{ certificates_folder }}/{{ domain }}/privkey.pem;
+  ssl_certificate {{ certificates_folder }}/www.{{ domain }}/fullchain.pem;
+  ssl_certificate_key {{ certificates_folder }}/www.{{ domain }}/privkey.pem;
+
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
   ssl_prefer_server_ciphers on;
   ssl_dhparam /etc/ssl/certs/dhparam.pem;
@@ -34,7 +35,7 @@ server {
   add_header X-Frame-Options SAMEORIGIN;
   add_header X-Content-Type-Options nosniff;
   add_header X-XSS-Protection "1; mode=block";
-  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' www.google-analytics.com maps.googleapis.com; img-src 'self' www.google-analytics.com maps.googleapis.com maps.gstatic.com csi.gstatic.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.googleapis.com fonts.gstatic.com; child-src 'none'; object-src 'none'";
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://maps.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' https://www.google-analytics.com https://maps.googleapis.com https://maps.gstatic.com https://csi.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; frame-src https://www.youtube.com; child-src https://www.youtube.com; object-src 'none'";
 
   {% if certificates.stat.exists %}
 
@@ -44,7 +45,7 @@ server {
   }
   {% endif %}
 
-  try_files $uri/index.html $uri.html $uri @app;
+  try_files $uri $uri/ @app =404;
 
   # Initial i18n redirect
   location = / {
