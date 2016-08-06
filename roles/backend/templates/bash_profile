@@ -1,2 +1,4 @@
+. ~/.bashrc
+
 export NODE_ENV={{ node_env }}
 export MAILGUN_API_KEY={{ vault_mailgun_api_key }}
