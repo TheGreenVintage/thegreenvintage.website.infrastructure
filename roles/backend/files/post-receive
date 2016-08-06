@@ -23,7 +23,7 @@ fi
 echo 'Restarting node service...'
 
 # Fix downtime
-rm -Rf $TMP_GIT_CLONE
+rm -Rf $PUBLIC_WWW
 
 git clone $GIT_REPO $PUBLIC_WWW
 cd $PUBLIC_WWW
