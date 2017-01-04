@@ -12,5 +12,5 @@
     when: create_certificates == 'yes' and livecert.stat.exists == False
 
   - name: add cron rule for letsencrypt renewals
-    cron: name="letsencrypt renewal" minute="0" hour="11" job="letsencrypt renew"
+    cron: name="letsencrypt renewal" minute="0" hour="11" job="letsencrypt renew && systemctl restart nginx"
     when: create_certificates == 'yes'
