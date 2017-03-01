@@ -36,7 +36,7 @@
   - name: starting backend service
     become_user: '{{ user }}'
     notify: nginx reload
-    command: pm2 start -f ./bin/www --name {{ user }}.backend
+    command: pm2 start -f ./bin/www --name {{ user }}.backend --update-env
     args:
       chdir: /home/{{ user }}/shared/public/dynamic
     environment:
@@ -45,7 +45,7 @@
   - name: starting next backend service
     become_user: '{{ user }}'
     notify: nginx reload
-    command: pm2 start -f ./bin/www --name next.{{ user }}.backend
+    command: pm2 start -f ./bin/www --name next.{{ user }}.backend --update-env
     args:
       chdir: /home/{{ user }}/shared/public/next.dynamic
     environment:
