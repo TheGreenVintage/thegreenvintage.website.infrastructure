@@ -19,3 +19,7 @@
     - common
     - frontend
     - backend
+
+  handlers:
+    - name: nginx reload
+      service: name=nginx state=reloaded

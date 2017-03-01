@@ -1,5 +1,8 @@
 . ~/.bashrc
 
+export PATH="$PATH:~/.gem/ruby/2.3.0/bin"
+export GEM_HOME="$HOME:~/.gem"
+
 export NODE_ENV={{ node_env }}
 export MAILGUN_API_KEY={{ vault_mailgun_api_key }}
 export MAILGUN_DOMAIN={{ domain }}

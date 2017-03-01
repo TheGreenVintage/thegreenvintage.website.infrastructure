@@ -1,11 +1,11 @@
 upstream app_server_{{ user }} {
-  server unix:/home/{{ user }}/shared/sockets/{{ user }}.website.dynamic.sock fail_timeout=0;
+  server unix:/home/{{ user }}/shared/sockets/dynamic.sock fail_timeout=0;
 }
 
 server {
 
   server_name {{ domain }} www.{{ domain }};
-  root /home/{{ user }}/shared/public/{{ user }}.website.static;
+  root /home/{{ user }}/shared/public/static;
 
   listen 80;
   listen [::]:80;

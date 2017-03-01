@@ -3,9 +3,9 @@
 set -e
 
 WWW=$HOME/shared/public
-GIT_REPO=$HOME/shared/repositories/$USER.website.dynamic
-PUBLIC_PROD_WWW=$WWW/$USER.website.dynamic
-PUBLIC_NEXT_WWW=$WWW/next.$USER.website.dynamic
+GIT_REPO=$HOME/shared/repositories/dynamic
+PUBLIC_PROD_WWW=$WWW/dynamic
+PUBLIC_NEXT_WWW=$WWW/next.dynamic
 
 read GIT_FROM GIT_TO GIT_BRANCH
 GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
@@ -27,5 +27,6 @@ rm -Rf $PUBLIC_WWW
 
 git clone $GIT_REPO $PUBLIC_WWW
 cd $PUBLIC_WWW
+npm install
 pm2 restart $SERVICE
 exit

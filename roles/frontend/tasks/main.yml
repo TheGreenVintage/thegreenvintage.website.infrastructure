@@ -2,7 +2,7 @@
   - include: folders.yml
   - include: certificates.yml
   - include: letsencrypt.yml
+  - include: ruby.yml
   - include: repository.yml
   - include: initialize.yml
   - include: nginx.yml
-  - include: ruby.yml

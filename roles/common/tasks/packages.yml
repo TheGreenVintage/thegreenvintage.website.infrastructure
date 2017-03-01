@@ -1,5 +1,5 @@
 ---
-  - name: install apt https package
+  - name: Install apt https package
     action: apt pkg=apt-transport-https state=installed
 
   - name: Install common packages

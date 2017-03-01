@@ -2,3 +2,4 @@
   - include: packages.yml
   - include: users.yml
   - include: keys.yml
+  - include: node.yml

@@ -1,0 +1,11 @@
+---
+  - name: Import the NodeSource GPG key into apt
+    apt_key:
+      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+      state: present
+
+  - name: add nodejs ppa
+    action: apt_repository repo='deb https://deb.nodesource.com/node_5.x trusty main' state=present
+
+  - name: install nodejs package
+    action: apt pkg=nodejs state=installed

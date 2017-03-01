@@ -1,50 +1,52 @@
 ---
-  - stat: path=/home/{{ user }}/shared/public/{{ user }}.website.dynamic
+  - stat: path=/home/{{ user }}/shared/public/dynamic
     register: backend
 
   - name: initialize backend
     become_user: '{{ user }}'
     when: backend.stat.exists == False
     git:
-      repo: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
-      dest: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+      repo: /home/{{ user }}/shared/repositories/dynamic
+      dest: /home/{{ user }}/shared/public/dynamic
       version: master
 
   - name: installing package.json dependencies
     become_user: '{{ user }}'
     command: npm install
     args:
-      chdir: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+      chdir: /home/{{ user }}/shared/public/dynamic
 
-  - stat: path=/home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+  - stat: path=/home/{{ user }}/shared/public/next.dynamic
     register: nextbackend
 
   - name: initialize next backend
     become_user: '{{ user }}'
     when: nextbackend.stat.exists == False
     git:
-      repo: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
-      dest: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+      repo: /home/{{ user }}/shared/repositories/dynamic
+      dest: /home/{{ user }}/shared/public/next.dynamic
       version: master # Override in future deploys
 
   - name: installing package.json dependencies in next
     become_user: '{{ user }}'
     command: npm install
     args:
-      chdir: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+      chdir: /home/{{ user }}/shared/public/next.dynamic
 
   - name: starting backend service
     become_user: '{{ user }}'
-    command: pm2 start ./bin/www --name {{ user }}.backend
+    notify: nginx reload
+    command: pm2 start -f ./bin/www --name {{ user }}.backend
     args:
-      chdir: /home/{{ user }}/shared/public/{{ user }}.website.dynamic
+      chdir: /home/{{ user }}/shared/public/dynamic
     environment:
-      PORT: /home/{{ user }}/shared/sockets/{{ user}}.website.dynamic.sock
+      PORT: /home/{{ user }}/shared/sockets/dynamic.sock
 
   - name: starting next backend service
     become_user: '{{ user }}'
-    command: pm2 start ./bin/www --name next.{{ user }}.backend
+    notify: nginx reload
+    command: pm2 start -f ./bin/www --name next.{{ user }}.backend
     args:
-      chdir: /home/{{ user }}/shared/public/next.{{ user }}.website.dynamic
+      chdir: /home/{{ user }}/shared/public/next.dynamic
     environment:
-      PORT: /home/{{ user }}/shared/sockets/next.{{ user}}.website.dynamic.sock
+      PORT: /home/{{ user }}/shared/sockets/next.dynamic.sock

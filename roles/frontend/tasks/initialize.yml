@@ -1,20 +1,20 @@
 ---
-  - stat: path=/home/{{ user }}/shared/public/{{ user }}.website.static
+  - stat: path=/home/{{ user }}/shared/public/static
     register: frontend
 
   - name: simulate initial push
     become_user: '{{ user }}'
     command: bash -c "echo '0000000 0000000 refs/heads/master' | ./hooks/post-receive"
     args:
-      chdir: /home/{{ user }}/shared/repositories/{{ user }}.website.static
+      chdir: /home/{{ user }}/shared/repositories/static
     when: frontend.stat.exists == False
 
-  - stat: path=/home/{{ user }}/shared/public/next.{{ user }}.website.static
+  - stat: path=/home/{{ user }}/shared/public/next.static
     register: nextfrontend
 
   - name: simulate initial push for next
     become_user: '{{ user }}'
     command: bash -c "echo '0000000 0000000 refs/heads/develop' | ./hooks/post-receive"
     args:
-      chdir: /home/{{ user }}/shared/repositories/{{ user }}.website.static
+      chdir: /home/{{ user }}/shared/repositories/static
     when: nextfrontend.stat.exists == False

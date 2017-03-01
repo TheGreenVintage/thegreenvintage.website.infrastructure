@@ -8,7 +8,7 @@
     register: livecert
 
   - name: letsencrypt issuance
-    command: letsencrypt certonly -n --agree-tos --webroot -w /home/{{ user }}/shared/public/{{ user }}.website.static/ -d www.{{ domain }} -d {{ domain }} -w /home/{{ user }}/shared/public/next.{{ user }}.website.static/ -d next.{{ domain }} -m {{ webmaster_email }}
+    command: letsencrypt certonly -n --agree-tos --webroot -w /home/{{ user }}/shared/public/static/ -d www.{{ domain }} -d {{ domain }} -w /home/{{ user }}/shared/public/next.static/ -d next.{{ domain }} -m {{ webmaster_email }}
     when: create_certificates == 'yes' and livecert.stat.exists == False
 
   - name: add cron rule for letsencrypt renewals

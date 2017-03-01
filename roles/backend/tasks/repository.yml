@@ -3,12 +3,12 @@
     become_user: '{{ user }}'
     git:
       repo: https://github.com/{{ github_user_name }}/{{ user }}.website.dynamic.git
-      dest: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic
+      dest: /home/{{ user }}/shared/repositories/dynamic
       bare: yes
 
   - name: copy git hook for dynamic repository
     become_user: '{{ user }}'
     copy:
       src: roles/backend/files/post-receive
-      dest: /home/{{ user }}/shared/repositories/{{ user }}.website.dynamic/hooks/post-receive
+      dest: /home/{{ user }}/shared/repositories/dynamic/hooks/post-receive
       mode: 'u+x'

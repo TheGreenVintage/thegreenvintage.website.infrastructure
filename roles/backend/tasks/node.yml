@@ -3,16 +3,5 @@
     become_user: '{{ user }}'
     template: src=templates/bash_profile dest=/home/{{ user }}/.bash_profile mode=0640
 
-  - name: Import the NodeSource GPG key into apt
-    apt_key:
-      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-      state: present
-
-  - name: add nodejs ppa
-    action: apt_repository repo='deb https://deb.nodesource.com/node_5.x trusty main' state=present
-
-  - name: install nodejs package
-    action: apt pkg=nodejs state=installed
-
   - name: install pm2 package
     npm: name=pm2 global=yes

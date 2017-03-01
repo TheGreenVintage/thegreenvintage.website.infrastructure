@@ -1,5 +1,5 @@
 [development]
-app ansible_ssh_host=10.0.3.8 ansible_ssh_user=ubuntu
+app ansible_ssh_host=local.thegreenvintage.com ansible_ssh_user=thegreenvintage
 
 [production]
-82.196.7.113 ansible_ssh_user=thegreenvintage
+thegreenvintage.com ansible_ssh_user=thegreenvintage

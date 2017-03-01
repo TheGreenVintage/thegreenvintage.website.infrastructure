@@ -3,10 +3,10 @@
 set -e
 
 WWW=$HOME/shared/public
-GIT_REPO=$HOME/shared/repositories/$USER.website.static
-TMP_GIT_CLONE=$HOME/tmp/git/$USER.website.static
-PUBLIC_PROD_WWW=$WWW/$USER.website.static
-PUBLIC_NEXT_WWW=$WWW/next.$USER.website.static
+GIT_REPO=$HOME/shared/repositories/static
+TMP_GIT_CLONE=$HOME/tmp/git/static
+PUBLIC_PROD_WWW=$WWW/static
+PUBLIC_NEXT_WWW=$WWW/next.static
 
 read GIT_FROM GIT_TO GIT_BRANCH
 GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
@@ -18,6 +18,7 @@ else
 fi
 
 
+rm -rf $TMP_GIT_CLONE
 git clone -b $GIT_BRANCH $GIT_REPO $TMP_GIT_CLONE
 cd $TMP_GIT_CLONE
 bundle install --path $HOME/.gem
