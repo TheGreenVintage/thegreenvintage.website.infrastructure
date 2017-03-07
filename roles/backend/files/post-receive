@@ -8,8 +8,7 @@ PUBLIC_PROD_WWW=$WWW/dynamic
 PUBLIC_NEXT_WWW=$WWW/next.dynamic
 
 read GIT_FROM GIT_TO GIT_BRANCH
-GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
-
+GIT_BRANCH=$(echo "$GIT_BRANCH" | sed 's/refs\/heads\///')
 
 if [ "$GIT_BRANCH" == "master" ]; then
   PUBLIC_WWW=$PUBLIC_PROD_WWW
@@ -23,10 +22,14 @@ fi
 echo 'Restarting node service...'
 
 # Fix downtime
-rm -Rf $PUBLIC_WWW
+rm -Rf "$PUBLIC_WWW"
 
-git clone $GIT_REPO $PUBLIC_WWW
-cd $PUBLIC_WWW
+git clone -b "$GIT_BRANCH" "$GIT_REPO" "$PUBLIC_WWW"
+
+cd "$PUBLIC_WWW"
 npm install
-pm2 restart $SERVICE
+
+cd "$HOME/shared/config"
+pm2 startOrReload "$USER.config.js" --only "$SERVICE"
+
 exit

@@ -1,13 +1,12 @@
 ---
 
 - hosts: production
-  remote_user: thegreenvintage
   become: yes
   vars_files:
     - vars.yml
     - secrets.yml
   vars:
-    domain: thegreenvintage.com
+    domain: '{{ top_domain }}'
     certificates_folder: /etc/letsencrypt/live
     node_env: production
   vars_prompt:

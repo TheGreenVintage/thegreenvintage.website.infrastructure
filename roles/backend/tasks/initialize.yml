@@ -16,6 +16,7 @@
     args:
       chdir: /home/{{ user }}/shared/public/dynamic
 
+
   - stat: path=/home/{{ user }}/shared/public/next.dynamic
     register: nextbackend
 
@@ -33,20 +34,15 @@
     args:
       chdir: /home/{{ user }}/shared/public/next.dynamic
 
-  - name: starting backend service
-    become_user: '{{ user }}'
-    notify: nginx reload
-    command: pm2 start -f ./bin/www --name {{ user }}.backend --update-env
-    args:
-      chdir: /home/{{ user }}/shared/public/dynamic
-    environment:
-      PORT: /home/{{ user }}/shared/sockets/dynamic.sock
 
-  - name: starting next backend service
+
+  - name: pm2 config for backend
+    become_user: '{{ user }}'
+    template: src=templates/pm2.config dest=/home/{{ user }}/shared/config/{{ user }}.config.js mode=0640
+
+  - name: starting backend services
     become_user: '{{ user }}'
     notify: nginx reload
-    command: pm2 start -f ./bin/www --name next.{{ user }}.backend --update-env
+    command: pm2 startOrReload {{ user }}.config.js
     args:
-      chdir: /home/{{ user }}/shared/public/next.dynamic
-    environment:
-      PORT: /home/{{ user }}/shared/sockets/next.dynamic.sock
+      chdir: /home/{{ user }}/shared/config

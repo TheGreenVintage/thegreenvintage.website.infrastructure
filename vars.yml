@@ -1,7 +1,8 @@
 ---
 
 user: thegreenvintage
+top_domain: '{{ user }}.com'
 description: The Green Vintage
 github_user_name: TheGreenVintage
 webmaster_email: fcsonline@gmail.com
-info_email: info@thegreenvintage.com
+info_email: 'info@{{ top_domain }}'

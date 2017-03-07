@@ -1,0 +1,9 @@
+---
+  - name: creates the app user
+    user: name={{ user }} group=www-data shell=/bin/bash
+
+  - name: Set authorized keys from fcsonline took from url
+    authorized_key:
+      user: {{ user }}
+      state: present
+      key: https://github.com/fcsonline.keys

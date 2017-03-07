@@ -1,4 +1,7 @@
 ---
 
+  - name: ensures that the config folder is created
+    action: file path=/home/{{ user }}/shared/config state=directory group=www-data owner={{ user }} mode=2775
+
   - name: ensures that the sockets folder is created
     action: file path=/home/{{ user }}/shared/sockets state=directory group=www-data owner={{ user }} mode=2775

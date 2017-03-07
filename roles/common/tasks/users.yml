@@ -1,6 +1,6 @@
 ---
   - name: creates the app user
-    user: name={{ user }} group=www-data shell=/bin/bash # generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+    user: name={{ user }} group=www-data shell=/bin/bash
 
   - name: enable colors for root
     replace: dest=/root/.bashrc regexp='^#(force_color_prompt=yes)$' replace='\1'

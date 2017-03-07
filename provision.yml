@@ -1,0 +1,20 @@
+---
+
+- hosts: 'production'
+  gather_facts: False
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Ensure python 2.7 is installed
+      raw: apt-get install -y python2.7 python-simplejson
+
+    - name: creates the app user
+      user: name={{ user }} group=www-data shell=/bin/bash
+
+    - name: Add authorized keys
+      authorized_key:
+        user: '{{ user }}'
+        state: present
+        key: https://github.com/fcsonline.keys

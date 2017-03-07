@@ -1,8 +1,6 @@
 ---
-
-  - name: Add SSH keys to domain user
+  - name: Add authorized keys
     authorized_key:
       user: '{{ user }}'
-      key: '{{ item }}'
-    with_file:
-      - public_keys/fcsonline
+      state: present
+      key: https://github.com/fcsonline.keys
