@@ -13,6 +13,7 @@
     - name: "create_certificates"
       prompt: "Create SSL Certificates (yes, no)"
       default: "no"
+      private: no
 
   roles:
     - common
