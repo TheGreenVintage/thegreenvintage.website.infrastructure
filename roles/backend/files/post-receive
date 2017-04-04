@@ -13,9 +13,11 @@ GIT_BRANCH=$(echo "$GIT_BRANCH" | sed 's/refs\/heads\///')
 if [ "$GIT_BRANCH" == "master" ]; then
   PUBLIC_WWW=$PUBLIC_PROD_WWW
   SERVICE=$USER.backend
+  BACKEND_ENV=production
 else
   PUBLIC_WWW=$PUBLIC_NEXT_WWW
   SERVICE=next.$USER.backend
+  BACKEND_ENV=development
 fi
 
 
@@ -30,6 +32,6 @@ cd "$PUBLIC_WWW"
 npm install
 
 cd "$HOME/shared/config"
-pm2 startOrReload "$USER.config.js" --only "$SERVICE"
+pm2 startOrReload "$USER.config.js" --only "$SERVICE" --env "$BACKEND_ENV"
 
 exit

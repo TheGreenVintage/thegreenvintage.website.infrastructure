@@ -9,19 +9,23 @@ PUBLIC_PROD_WWW=$WWW/static
 PUBLIC_NEXT_WWW=$WWW/next.static
 
 read GIT_FROM GIT_TO GIT_BRANCH
-GIT_BRANCH=`echo $GIT_BRANCH | sed 's/refs\/heads\///'`
+GIT_BRANCH=$(echo "$GIT_BRANCH" | sed 's/refs\/heads\///')
 
 if [ "$GIT_BRANCH" == "master" ]; then
+  JEKYLL_ENV=production
   PUBLIC_WWW=$PUBLIC_PROD_WWW
 else
+  JEKYLL_ENV=development
   PUBLIC_WWW=$PUBLIC_NEXT_WWW
 fi
 
+rm -rf "$TMP_GIT_CLONE"
+git clone -b "$GIT_BRANCH" "$GIT_REPO" "$TMP_GIT_CLONE"
 
-rm -rf $TMP_GIT_CLONE
-git clone -b $GIT_BRANCH $GIT_REPO $TMP_GIT_CLONE
-cd $TMP_GIT_CLONE
-bundle install --path $HOME/.gem
-bundle exec jekyll build --source $TMP_GIT_CLONE --destination $PUBLIC_WWW
-rm -Rf $TMP_GIT_CLONE
+pushd "$TMP_GIT_CLONE"
+  bundle install --path "$HOME/.gem"
+  JEKYLL_ENV="$JEKYLL_ENV" bundle exec jekyll build --source "$TMP_GIT_CLONE" --destination "$PUBLIC_WWW"
+popd
+
+rm -Rf "$TMP_GIT_CLONE"
 exit
