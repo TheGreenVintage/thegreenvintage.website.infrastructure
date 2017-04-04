@@ -8,3 +8,4 @@ export MAILGUN_API_KEY={{ vault_mailgun_api_key }}
 export MAILGUN_DOMAIN={{ domain }}
 export INFO_EMAIL={{ info_email }}
 export WEBMASTER_EMAIL={{ webmaster_email }}
+export RAVEN_DSN={{ vault_raven_dsn }}

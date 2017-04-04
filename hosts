@@ -1,5 +1,5 @@
 [development]
-app ansible_ssh_host=local.thegreenvintage.com
+development ansible_ssh_host=local.thegreenvintage.com
 
 [production]
-thegreenvintage.com
+production ansible_ssh_host=thegreenvintage.com

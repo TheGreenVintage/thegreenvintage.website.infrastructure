@@ -1,0 +1,5 @@
+---
+
+domain: '{{ top_domain }}'
+certificates_folder: /etc/letsencrypt/live
+node_env: production

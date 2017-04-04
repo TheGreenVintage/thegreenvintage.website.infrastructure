@@ -1,14 +1,12 @@
 ---
 
-- hosts: production
+- hosts: all
   become: yes
+
   vars_files:
     - vars.yml
     - secrets.yml
-  vars:
-    domain: '{{ top_domain }}'
-    certificates_folder: /etc/letsencrypt/live
-    node_env: production
+
   vars_prompt:
     - name: "create_certificates"
       prompt: "Create SSL Certificates (yes, no)"

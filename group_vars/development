@@ -1,0 +1,5 @@
+---
+
+domain: 'local.{{ top_domain }}'
+certificates_folder: /home/{{ user }}/shared/certificates
+node_env: development
