@@ -5,4 +5,5 @@
   - include: ruby.yml
   - include: repository.yml
   - include: initialize.yml
+  - include: csp.yml
   - include: nginx.yml
