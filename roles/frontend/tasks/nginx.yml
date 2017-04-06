@@ -16,23 +16,6 @@
    - name: remove default nginx site
      action: file path=/etc/nginx/sites-enabled/default state=absent
 
-   - name: CSP rules
-     set_fact:
-       csp_rules:
-         - "default-src {{ csp_default  | join(' ') }}"
-         - "script-src {{ csp_script | join(' ') }}"
-         - "img-src {{ csp_img | join(' ') }}"
-         - "style-src {{ csp_style | join(' ') }}"
-         - "font-src {{ csp_font | join(' ') }}"
-         - "frame-src {{ csp_frame | join(' ') }}"
-         - "child-src {{ csp_child | join(' ') }}"
-         - "object-src {{ csp_object | join(' ') }}"
-         - "connect-src {{ csp_connect | join(' ') }}"
-
-   - name: CSP main rule
-     set_fact:
-       csp_rule: "{{ csp_rules | join('; ') }}"
-
    - name: writes the nginx config
      template: src=templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644
 

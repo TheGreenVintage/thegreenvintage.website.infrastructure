@@ -39,7 +39,7 @@ server {
   add_header X-Frame-Options SAMEORIGIN;
   add_header X-Content-Type-Options nosniff;
   add_header X-XSS-Protection "1; mode=block";
-  add_header Content-Security-Policy "{{ csp_rule }}";
+  add_header Content-Security-Policy "{% for key, value in csp_rules.iteritems() %}{{ key }} {{ value | join(' ') }}; {% endfor %}";
 
   {% if certificates.stat.exists %}
   # global HTTP handler
