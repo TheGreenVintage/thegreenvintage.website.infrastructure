@@ -27,8 +27,9 @@ server {
   add_header Strict-Transport-Security max-age=15768000;
   {% endif %}
 
-  limit_conn conn_limit_per_ip 10;
-  limit_req zone=req_limit_per_ip burst=10 nodelay;
+#  limit_conn conn_limit_per_ip 10;
+#  limit_req zone=req_limit_per_ip burst=10 nodelay;
+
   client_max_body_size 1G;
   client_body_timeout 5s;
   client_header_timeout 5s;
