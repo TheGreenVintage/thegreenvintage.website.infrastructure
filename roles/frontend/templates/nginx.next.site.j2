@@ -102,4 +102,19 @@ server {
     proxy_redirect off;
     proxy_pass http://app_server_next_{{ user }};
   }
+
+  location /deploy {
+    default_type 'text/plain';
+
+    content_by_lua '
+      if ngx.var.arg_token == "{{ vault_dato_deploy_token }}" then
+        ngx.status = 204
+        ngx.say("Deploying...")
+
+        os.execute("/home/thegreenvintage/shared/deploy/deploy.sh develop > /home/thegreenvintage/shared/logs/deploy 2>&1 &")
+      else
+        ngx.say("Error")
+      end
+    ';
+  }
 }

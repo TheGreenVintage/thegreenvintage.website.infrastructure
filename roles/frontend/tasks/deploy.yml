@@ -1,0 +1,13 @@
+---
+
+   - name: writes the swap user script
+     template:
+       src: templates/deploy.sh
+       dest: /home/{{ user }}/shared/deploy/deploy.sh
+       mode: 'u+x'
+
+   - name: writes the deploy static script
+     template:
+       src: templates/static.sh
+       dest: /home/{{ user }}/shared/deploy/static.sh
+       mode: 'u+x'

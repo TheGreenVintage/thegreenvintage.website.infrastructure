@@ -4,6 +4,7 @@
   - include: letsencrypt.yml
   - include: ruby.yml
   - include: repository.yml
+  - include: deploy.yml
   - include: initialize.yml
   - include: csp.yml
   - include: nginx.yml

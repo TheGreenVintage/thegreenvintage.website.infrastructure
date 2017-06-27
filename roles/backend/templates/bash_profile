@@ -3,6 +3,9 @@
 export PATH="$PATH:~/.gem/ruby/2.3.0/bin"
 export GEM_HOME="$HOME:~/.gem"
 
+export DATO_DEPLOY_TOKEN={{ vault_dato_deploy_token }}
+export DATO_API_TOKEN={{ vault_dato_api_token }}
+
 export NODE_ENV={{ node_env }}
 export MAILGUN_API_KEY={{ vault_mailgun_api_key }}
 export MAILGUN_DOMAIN={{ domain }}

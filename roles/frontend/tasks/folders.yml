@@ -5,3 +5,9 @@
 
   - name: ensures that the extra folder is created
     action: file path=/home/{{ user }}/shared/extras state=directory group=www-data owner={{ user }} mode=775
+
+  - name: ensures that the deploy folder is created
+    action: file path=/home/{{ user }}/shared/deploy state=directory group=www-data owner={{ user }} mode=2775
+
+  - name: ensures that the logs folder is created
+    action: file path=/home/{{ user }}/shared/logs state=directory group=www-data owner={{ user }} mode=2775
