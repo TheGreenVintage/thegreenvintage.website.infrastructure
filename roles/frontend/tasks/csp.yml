@@ -18,6 +18,7 @@
           - https://maps.googleapis.com
           - https://maps.gstatic.com
           - https://csi.gstatic.com
+          - https://www.datocms-assets.com
         style-src:
           - "'self'"
           - "'unsafe-inline'"
