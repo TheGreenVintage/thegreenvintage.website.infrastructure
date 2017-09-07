@@ -111,7 +111,7 @@ server {
         ngx.status = 204
         ngx.say("Deploying...")
 
-        os.execute("/home/thegreenvintage/shared/deploy/deploy.sh develop > /home/thegreenvintage/shared/logs/deploy 2>&1 &")
+        os.execute("/home/{{ user }}/shared/deploy/deploy.sh develop > /home/{{ user }}/shared/logs/deploy 2>&1 &")
       else
         ngx.say("Error")
       end
