@@ -9,3 +9,18 @@
 
   - name: install nodejs package
     action: apt pkg=nodejs state=installed
+
+  - name: Add Yarnpkg apt key
+    apt_key:
+      url: https://dl.yarnpkg.com/debian/pubkey.gpg
+
+  - name: Add Yarnpkg repositories for yarn
+    apt_repository:
+      repo: "deb https://dl.yarnpkg.com/debian/ stable main"
+      state: present
+      update_cache: yes
+
+  - name: Ensure yarn is installed
+    apt:
+      name: 'yarn'
+      state: present
